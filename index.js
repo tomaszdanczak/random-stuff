@@ -15,6 +15,8 @@ const typeDefs = gql`
     pi: Float
     isTodayFriday: Boolean
     randomCoinTossesUntilTrue: [Boolean]
+    e: Float
+    eulersSeries: [Float]
   }
 `;
 
@@ -39,6 +41,14 @@ function rootValue() {
     return randomCoinTosses;
   };
 
+  const getEulerElement = (index) => Math.pow(1 + 1 / (index + 1), index + 1);
+
+  const getEulersSeries = () => {
+    const eulersSeries = Array.from(Array(1000));
+
+    return eulersSeries.map((el, index) => getEulerElement(index));
+  };
+
   const data = {
     greeting: "Hello world!",
     interestingUrls: [
@@ -52,6 +62,8 @@ function rootValue() {
     pi: Math.PI,
     isTodayFriday: today.getDay() === 5,
     randomCoinTossesUntilTrue: getRandomCoinTossesUntilTrue(),
+    e: Math.E,
+    eulersSeries: getEulersSeries(),
   };
   return data;
 }
