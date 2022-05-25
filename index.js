@@ -12,11 +12,32 @@ const typeDefs = gql`
     email: String
     pets: [String]
     randomDiceThrow: Int
+    pi: Float
+    isTodayFriday: Boolean
+    randomCoinTossesUntilTrue: [Boolean]
   }
 `;
 
 function rootValue() {
   const getRandomDiceThrow = (sides) => Math.ceil(Math.random() * sides);
+
+  const today = new Date();
+
+  const getRandomCoinToss = () => Math.random() > 0.5;
+
+  const getRandomCoinTossesUntilTrue = () => {
+    const randomCoinTosses = [];
+
+    while (true) {
+      const randomCoinToss = getRandomCoinToss();
+
+      randomCoinTosses.push(randomCoinToss);
+
+      if (randomCoinToss) break;
+    }
+
+    return randomCoinTosses;
+  };
 
   const data = {
     greeting: "Hello world!",
@@ -28,6 +49,9 @@ function rootValue() {
     email: "john@example.com",
     pets: ["Mittens", "Doggo", "Birb"],
     randomDiceThrow: getRandomDiceThrow(6),
+    pi: Math.PI,
+    isTodayFriday: today.getDay() === 5,
+    randomCoinTossesUntilTrue: getRandomCoinTossesUntilTrue(),
   };
   return data;
 }
