@@ -46,7 +46,7 @@ function rootValue() {
   const getEulersSeries = () => {
     const eulersSeries = Array.from(Array(1000));
 
-    return eulersSeries.map((el, index) => getEulerElement(index));
+    return eulersSeries.map((_, index) => getEulerElement(index));
   };
 
   const data = {
