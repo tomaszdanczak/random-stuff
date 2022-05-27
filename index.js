@@ -19,6 +19,8 @@ const typeDefs = gql`
     eulersSeries: [Float]
     today: DayOfWeek
     workDays: [DayOfWeek]
+    currentMonth: Month
+    monthsElapsed: [Month]
   }
 
   enum DayOfWeek {
@@ -30,6 +32,21 @@ const typeDefs = gql`
     FRI
     SUN
   }
+
+  enum Month {
+    JAN
+    FEB
+    MAR
+    APR
+    MAY
+    JUN
+    JUL
+    AUG
+    SEP
+    OCT
+    NOV
+    DEC
+  }
 `;
 
 function rootValue() {
@@ -38,6 +55,20 @@ function rootValue() {
   const today = new Date();
 
   const DAYS_OF_WEEK = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  const MONTHS_OF_YEAR = [
+    "JAN",
+    "FEB",
+    "MAR",
+    "APR",
+    "MAY",
+    "JUN",
+    "JUL",
+    "AUG",
+    "SEP",
+    "OCT",
+    "NOV",
+    "DEC",
+  ];
 
   const getRandomCoinToss = () => Math.random() > 0.5;
 
@@ -63,6 +94,13 @@ function rootValue() {
     return eulersSeries.map((_, index) => getEulerElement(index));
   };
 
+  const getmonthsElapsed = () => {
+    // const monthsElapsed = Array.from(Array(today.getMonth()));
+    const monthsElapsed = Array.from(Array(0));
+
+    return monthsElapsed.map((_, index) => MONTHS_OF_YEAR[index]);
+  };
+
   const data = {
     greeting: "Hello world!",
     interestingUrls: [
@@ -80,6 +118,8 @@ function rootValue() {
     eulersSeries: getEulersSeries(),
     today: DAYS_OF_WEEK[today.getDay()],
     workDays: DAYS_OF_WEEK.slice(1, 6),
+    currentMonth: MONTHS_OF_YEAR[today.getMonth()],
+    monthsElapsed: getmonthsElapsed(),
   };
   return data;
 }
