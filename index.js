@@ -17,6 +17,18 @@ const typeDefs = gql`
     randomCoinTossesUntilTrue: [Boolean]
     e: Float
     eulersSeries: [Float]
+    today: DayOfWeek
+    workDays: [DayOfWeek]
+  }
+
+  enum DayOfWeek {
+    MON
+    TUE
+    WED
+    THU
+    SAT
+    FRI
+    SUN
   }
 `;
 
@@ -24,6 +36,8 @@ function rootValue() {
   const getRandomDiceThrow = (sides) => Math.ceil(Math.random() * sides);
 
   const today = new Date();
+
+  const DAYS_OF_WEEK = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
   const getRandomCoinToss = () => Math.random() > 0.5;
 
@@ -64,6 +78,8 @@ function rootValue() {
     randomCoinTossesUntilTrue: getRandomCoinTossesUntilTrue(),
     e: Math.E,
     eulersSeries: getEulersSeries(),
+    today: DAYS_OF_WEEK[today.getDay()],
+    workDays: DAYS_OF_WEEK.slice(1, 6),
   };
   return data;
 }
